@@ -1,0 +1,10 @@
+#commentFields input {
+        width: 100%;
+}
+#commentFields textarea {
+    width:100%;
+}
+
+#addPost textarea,select,input{
+    width: 100%;
+}

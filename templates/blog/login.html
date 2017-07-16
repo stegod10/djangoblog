@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{%block title%}Login System{%endblock%}
+{%block body%}
+{%block category%}{%endblock%}
+{% if not request.user.is_authenticated %}
+<div class="row">
+    <!--- Login Panel --->
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Log in!</div>
+            <div class="panel-body">
+                {{login_durum}}
+                  <form class="form-block" method="post" action="{% url 'blog:login' %}">
+                        {%csrf_token%}
+                        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0"
+                               placeholder="Username" name="username">
+
+                        <input type="password" class="form-control mb-2 mr-sm-2 mb-sm-0"
+                               placeholder="Password" name="password" style="margin:10px 0 10px 0px">
+
+                        <button type="submit" class="btn btn-primary" style="float:right">Login</button>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{%endif%}
+{%endblock%}

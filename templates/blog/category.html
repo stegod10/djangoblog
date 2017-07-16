@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%block title%}Login System{%endblock%}
+{%block body%}
+<div class="col-md-9">
+
+{% for categoryEntry in post %}
+    <div class="thumbnail">
+        <img src="{{ MEDIA_URL }}{{ categoryEntry.image.url }}" alt="Python blog">
+        <div class="caption">
+            <h3>{{categoryEntry.title}}</h3>
+            <p>
+                {{categoryEntry.content|truncatechars:255}}
+            </p>
+            <p>
+                Yazar : {{categoryEntry.user}} - Okunma Sayısı : {{categoryEntry.contentCount}} Kere Okundu
+            </p>
+            <p>
+                <a href="{{categoryEntry.get_posts_detail_url}}" class="btn btn-primary" role="button">Devamını oku..</a>
+            </p>
+        </div>
+    </div>
+    {%endfor%}
+
+    <!--- Pages --->
+    <nav aria-label="...">
+        <ul class="pager">
+            {% if post.has_previous %}
+                  <li class="previous"><a href="?page={{ post.previous_page_number }}"><span aria-hidden="true">&larr;</span> Older</a></li>
+            {%else%}
+                  <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+            {%endif%}
+
+            {%if post.has_next %}
+                  <li class="next"><a href="?page={{ post.next_page_number }}">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            {%endif%}
+        </ul>
+    </nav>
+</div>
+
+{%endblock%}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{%block body%}
+
+
+<div class="col-md-9">
+
+    {%for allposts in posts%}
+
+    <div class="thumbnail">
+        <img src="{{ MEDIA_URL }}{{allposts.image.url}}" alt="Python blog">
+        <div class="caption">
+            <h3><a href="{{allposts.get_posts_detail_url}}">{{allposts.title}}</a></h3>
+            <p>
+                {{allposts.content|truncatechars:255}}
+            </p>
+            <p>
+                Yazar : {{allposts.user}} - Okunma Sayısı : {{allposts.contentCount}} Kere Okundu
+            </p>
+            <p>
+                <a href="{{allposts.get_posts_detail_url}}" class="btn btn-primary" role="button">Devamını oku..</a>
+            </p>
+        </div>
+    </div>
+    {%endfor%}
+
+    <!--- Pages --->
+    <nav aria-label="...">
+        <ul class="pager">
+            {% if posts.has_previous %}
+                  <li class="previous"><a href="?page={{ posts.previous_page_number }}"><span aria-hidden="true">&larr;</span> Older</a></li>
+            {%else%}
+                  <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+            {%endif%}
+
+            {%if posts.has_next %}
+                  <li class="next"><a href="?page={{ posts.next_page_number }}">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            {%endif%}
+        </ul>
+    </nav>
+</div>
+
+
+{%endblock%}

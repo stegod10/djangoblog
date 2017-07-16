@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{%block body%}
+<div class="col-md-9">
+    <div class="thumbnail">
+        <img src="{{MEDIA_URL}}{{post.image.url}}" alt="#">
+        <div class="caption">
+            <h3>{{post.title}}</h3>
+            <hr>
+            {% if request.user.is_authenticated %}
+            Düzenle: - <a href="{{post.get_posts_edit_url}}">(Düzenle)</a> <br>
+            Sil: - <a href="{% url 'blog:delete' post.id %}">(Sil)</a>
+            <hr>
+            {%endif%}
+            <p>
+                {{post.content}}
+            </p>
+            <p>
+                Yazar : {{post.user}} - Okunma Sayısı : {{post.contentCount}} Kere Okundu
+            </p>
+        </div>
+    </div>
+
+    <h2>Yorumlar:</h2>
+    {% for com in commentsAll %}
+    <div class="media" style="background-color:#ddd;padding:5px;border:2px solid #ccc;margin-bottom:5px;">
+        <div class="media-body">
+            <h4 class="media-heading">{{com.nameSurname}} - {{com.date}}</h4>
+            {{com.comments}}
+        </div>
+    </div>
+    {%endfor%}
+    <!-- hata mesajı ile karşılaşılırsa -->
+    {% if messages %}
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    {% endif %}
+
+    <form action="{%url 'blog:detail' slug=post.slug%}" method="post" id="commentFields">
+        <h2>Post your comment :</h2>
+        {% csrf_token %}
+        <!-- kayıtsız kullanıcılar için -->
+        {% if not request.user.is_authenticated %}
+        Name:
+        {{ commentForm.nameSurname }}
+        E-Mail :
+        {{ commentForm.email }}
+        {%else%}
+           <input name="nameSurname" maxlength="100" required="" id="id_nameSurname" value="{{request.user.username}}" type="hidden">
+           <input name="email" maxlength="100" required="" id="id_email" value="{{request.user.email}}" type="hidden">
+        {% endif %}
+        Comment:
+        {{ commentForm.comments }}
+        <input type="submit" value="Gönder">
+    </form>
+</div>
+
+
+{%endblock%}
+
+
+

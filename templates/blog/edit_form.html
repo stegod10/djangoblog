@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{%block title%}Add Post{%endblock%}
+{% block category %}{%endblock%}
+{%block body%}
+<div class="col-md-9">
+    {% if request.user.is_authenticated %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group" id="addPost">
+            {{ form.as_p}}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<div class="col-md-3">
+    <div class="panel panel-danger">
+        <div class="panel-heading">Dikkat</div>
+        <div class="panel-body">
+            İçerik eklerken lütfen anlamlı başlıklar seçiniz bunun yanın da
+            slug alanı otomatik olarak doldurulmaktadır.
+        </div>
+    </div>
+</div>
+{%endif%}
+{%endblock%}
+
+
+
+
